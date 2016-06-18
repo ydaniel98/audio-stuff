@@ -5,19 +5,22 @@
 #include <iomanip>
 
 template <typename T>
-T Wave::readSample(uint64_t pos) {
+T Wave::readRaw(uint64_t pos, uint8_t size) {
 
 	T buff = 0;
 
-	wav.seekg(0);
+	wav.seekg(pos);
 
-	wav.seekg(pos + soundDataStart);
-
-	for (uint8_t i = 0; i < bitsPerSample / 8; i++) {
-		buff |= wav.get() << i * 8;
+	for (uint8_t i = 0; i < size; i++) {
+		buff |= wav.get() << i;
 	}
 
 	return buff;
+}
+
+template <typename T>
+T Wave::readSample(uint64_t pos) {
+	return readRaw<T>(pos + soundDataStart, bitsPerSample / 8);
 }
 
 template <typename T>

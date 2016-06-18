@@ -13,6 +13,9 @@ public:
 
 	/* Reading */
 	template <typename T>
+	T readRaw												(uint64_t pos, uint8_t size);
+
+	template <typename T>
 	T readSample										(uint64_t pos);
 
 	template <typename T>
@@ -23,14 +26,14 @@ public:
 	/***********/
 
 	/* Properties Variables */
-	uint64_t fileSize;
-	uint64_t dataLength;
-	uint16_t format;
+	uint32_t fileSize;
+	uint32_t dataLength;
+	uint8_t format;
+	uint8_t channels;
 	uint32_t sampleRate;
-	uint16_t bitsPerSample;
-	uint32_t dataSize;
-	uint32_t soundDataStart;
-	uint16_t channels;
+	uint8_t  bitsPerSample;
+	uint64_t dataSize;
+	uint16_t soundDataStart;
 	/************************/
 
 	std::istream &wav;
@@ -40,14 +43,14 @@ public:
 private:
 
 	/* Properties */
-	uint64_t 			getFileSize				(std::istream &wav);
-	uint64_t			getDataLength			(std::istream &wav);
-	uint16_t			getFormat					(std::istream &wav);
-	uint16_t 			getChannels				(std::istream &wav);
+	uint32_t 			getFileSize				(std::istream &wav);
+	uint32_t			getDataLength			(std::istream &wav);
+	uint8_t				getFormat					(std::istream &wav);
+	uint8_t 			getChannels				(std::istream &wav);
 	uint32_t 			getSampleRate			(std::istream &wav);
-	uint16_t 			getBitsPerSample	(std::istream &wav);
-	uint32_t 			getDataSize				(std::istream &wav);
-	uint32_t 			getSoundDataStart	(std::istream &wav);
+	uint8_t 			getBitsPerSample	(std::istream &wav);
+	uint64_t 			getDataSize				(std::istream &wav);
+	uint16_t 			getSoundDataStart	(std::istream &wav);
 	uint8_t 			verifySoundFile		(std::istream &wav);
 	/**************/
 
