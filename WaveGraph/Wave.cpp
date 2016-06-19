@@ -22,7 +22,7 @@ Wave::Wave(std::istream &wav_): wav(wav_) {
 }
 
 uint32_t Wave::getFileSize(std::istream &wav) {
-  return readRaw<uint32_t>(7, 4);
+  return readRaw<uint32_t>(4, 4);
 }
 
 uint32_t Wave::getDataLength(std::istream &wav) {

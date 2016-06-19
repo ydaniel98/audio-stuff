@@ -18,8 +18,6 @@ DEPS = $(patsubst %, $(IDIR)/%, $(_DEPS))
 _OBJ = WaveGraph.o Wave.o
 OBJ = $(patsubst %, $(ODIR)/%, $(_OBJ))
 
-all: $(OBJ)
-
 $(ODIR)/%.o: %.cpp $(DEPS)
 	$(CC) -c -o $@ $< $(CFLAGS)
 

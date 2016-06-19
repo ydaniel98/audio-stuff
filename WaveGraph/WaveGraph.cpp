@@ -193,15 +193,13 @@ int main(int argc, char * argv[]) {
 
 	Wave wave(waveFile);
 
-	cout << "File Size: " << to_string(wave.fileSize) << endl;
-	cout << "Data Lenght: " << to_string(wave.dataLength) << endl;
-	cout << "Format: " << to_string(wave.format) << endl;
-	cout << "Channels: " << to_string(wave.channels) << endl;
-	cout << "Sample Rate: " << to_string(wave.sampleRate) << endl;
-	cout << "Bits Per Sample: " << to_string(wave.bitsPerSample) << endl;
-	cout << "Data Size: " << to_string(wave.dataSize) << endl;
-
-	return 0;
+	// cout << "File Size: " << to_string(wave.fileSize) << endl;
+	// cout << "Data Lenght: " << to_string(wave.dataLength) << endl;
+	// cout << "Format: " << to_string(wave.format) << endl;
+	// cout << "Channels: " << to_string(wave.channels) << endl;
+	// cout << "Sample Rate: " << to_string(wave.sampleRate) << endl;
+	// cout << "Bits Per Sample: " << to_string(wave.bitsPerSample) << endl;
+	// cout << "Data Size: " << to_string(wave.dataSize) << endl;
 
 	if (wave.bitsPerSample > 16) {
 		cout << LOG_ERR_BITS_PER_SAMPLE << endl;

@@ -41,13 +41,13 @@
 /**/
 
 /*
-/ Name Spaces
+* Name Spaces
 */
 using namespace std;
 /**/
 
 /*
-/ Variables
+* Variables
 */
 // Status check for the file being used
 struct stat s;
