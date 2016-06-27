@@ -12,7 +12,7 @@
 #define SYS_EXTENSION_PDF       ".pdf"
 #define SYS_EXTENSION_DATA      ".data"
 
-#define SYS_PLOT_FORMAT         " plot "
+#define SYS_PLOT_FORMAT         " pdfcairo "
 #define SYS_SAMPLE_OPTION       "-s"
 
 #define SYS_WAVE_GRAPH          "./wave_graph "

@@ -13,7 +13,6 @@ T Wave::readRaw(uint64_t pos, uint8_t size) {
 
 	for (uint8_t i = 0; i < size; i++) {
 		buff |= wav.get() << i * 8;
-		//std::cout<< std::to_string(buff) << std::endl;
 	}
 
 	return buff;

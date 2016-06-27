@@ -220,17 +220,21 @@ int main(int argc, char * argv[]) {
 
 	while (!waveFile.eof()) {
 
-		/* minVal maxVal Algorithm */
+		/*
+		* minVal maxVal Algorithm
+		*/
 		pos = wave.readSoundDataAtStep(buff, samples, pos, &buffPos, (uint8_t)(wave.channels - 1));
 
 		maxVal = buff[0];
 		minVal = buff[1];
 
 		if (maxVal < minVal) {
-			/* Switch the values */
+			/*
+			* Switch the values
+			*/
 			maxVal = buff[1];
 			minVal = buff[0];
-			/*********************/
+			/**/
 		}
 
 		for (uint16_t i = 2; i < buffPos; i++) {
@@ -248,9 +252,11 @@ int main(int argc, char * argv[]) {
 		}
 
 		buffPos = 0;
-		/*********************/
+		/**/
 
-		/* Write the data to the dumps file */
+		/*
+		* Write the data to the dumps file
+		*/
 		dumpsFile << to_string(dataStep * dataStepPos) << ' ';
 		dataStepPos += samples / 2;
 
@@ -260,7 +266,7 @@ int main(int argc, char * argv[]) {
 		dataStepPos += samples / 2;
 
 		dumpsFile << (maxLast ? maxVal : minVal) << '\n';
-		/************************************/
+		/**/
 
 		if ((uint16_t)(dataStepPos * dataStep) > seconds) {
 			seconds = (uint16_t(dataStepPos * dataStep));

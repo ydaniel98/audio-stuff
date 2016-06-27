@@ -23,7 +23,6 @@ $(ODIR)/%.o: %.cpp $(DEPS)
 
 wave_graph: $(OBJ)
 	$(CC) -o $@ $^ $(CFLAGS) $(LIBS)
-	mv wave_graph ../wave_graph
 
 .PHONY: clean
 

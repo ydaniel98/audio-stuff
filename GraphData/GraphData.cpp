@@ -1,12 +1,12 @@
 /*
-/ Author: Edwin Daniel Penalo
-/ Date: NO IDEA
-/ This program takes a .data file and outputs a pdf file with the
-/ graph
+* Author: Edwin Daniel Penalo
+* Date: NO IDEA
+* This program takes a .data file and outputs a pdf file with the
+* graph
 */
 
 /*
-/ Include
+* Include
 */
 #include <iostream>
 #include <stdlib.h>
@@ -18,7 +18,7 @@
 /**/
 
 /*
-/ Define
+* Define
 */
 // For the sake of OCD
 #define FILE_NAME               fileName
@@ -58,7 +58,7 @@ string buffer;
 char cbuff;
 
 // Time position on the graph
-uint16_t t;
+float t;
 
 // Dump file name (pdf)
 string fileName;
@@ -79,7 +79,7 @@ int main(int argc, char * argv[]) {
   }
 
   /*
-  / Init variables
+  * Init variables
   */
   buffer = "";
   cbuff = 0;
@@ -87,7 +87,7 @@ int main(int argc, char * argv[]) {
   /**/
 
   /*
-  / Get the name of the pdf graph file
+  * Get the name of the pdf graph file
   */
   for (uint8_t i = string(DATA_FILE).size(); i > 0; i--) {
     if (DATA_FILE[i] == '.') {
@@ -104,7 +104,7 @@ int main(int argc, char * argv[]) {
   /**/
 
   /*
-  / Create the final pdf file
+  * Create the final pdf file
   */
   buffer = SYS_TOUCH;
   buffer += FILE_NAME;
@@ -115,7 +115,7 @@ int main(int argc, char * argv[]) {
   dataFile.open(DATA_FILE);
 
   /*
-  / Find the max value of x
+  * Find the max value of x
   */
 
   cout << LOG_GET_MAX_TIME << endl;
@@ -130,11 +130,12 @@ int main(int argc, char * argv[]) {
   cbuff = dataFile.get();
   buffer = cbuff;
 
-  while (cbuff != '.' || (((cbuff - '0') > 0) && ((cbuff - '0') < 9))) {
+  while ((((cbuff - '0') >= 0) && ((cbuff - '0') <= 9)) || cbuff == '.') {
     cbuff = dataFile.get();
     buffer += cbuff;
   }
-  t = (uint16_t)stoi(buffer);
+
+  t = (float)atof(buffer.c_str());
   /**/
 
   uint8_t count = 0;
@@ -142,10 +143,11 @@ int main(int argc, char * argv[]) {
   for (float i = 0; i < t; i += 1.7) {
     cout << LOG_PLOT_RANGE << i << ':' << i + 1.6 << endl;
     /*
-    / Plot with gnuplot
+    * Plot with gnuplot
     */
-    // source <plotter (.sh file)> <data file (.data)> pdf
-    // <buffer file>-count.pdf [i:1.6]
+
+    buffer = "";
+
     buffer += SYS_SOURCE;
     buffer += PLOTTER;
     buffer += SYS_SPACE;
@@ -168,7 +170,7 @@ int main(int argc, char * argv[]) {
   }
 
   /*
-  / Merge the files with the user specified file
+  * Merge the files with the user specified file
   */
   buffer = PDF_MERGE_FILE_CMD;
   buffer += FILE_NAME;
@@ -185,7 +187,7 @@ int main(int argc, char * argv[]) {
   /**/
 
   /*
-  / Clean Up
+  * Clean Up
   */
   for (uint8_t j = 0; j < count; j++) {
     buffer = SYS_RM;
