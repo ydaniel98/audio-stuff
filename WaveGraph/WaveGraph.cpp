@@ -237,7 +237,12 @@ int main(int argc, char * argv[]) {
 			/**/
 		}
 
+		cout << buff[0] << endl;
+		cout << buff[1] << endl;
+
 		for (uint16_t i = 2; i < buffPos; i++) {
+
+			cout << buff[i] << endl;
 
 			if (buff[i] > maxVal) {
 				maxVal = buff[i];

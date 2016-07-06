@@ -8,20 +8,20 @@ CFLAGS = -I $(IDIR) -std=c++11 -Wall
 ODIR = ./obj
 #Libs directory
 LDIR =
-LIBS = -lfftw3 -lm
+LIBS = -lm
 
 #Dependencies
 _DEPS = Wave.hpp Wave.inl
 DEPS = $(patsubst %, $(IDIR)/%, $(_DEPS))
 
 #Objects
-_OBJ = fftTest.o Wave.o
+_OBJ = WaveGraph.o Wave.o
 OBJ = $(patsubst %, $(ODIR)/%, $(_OBJ))
 
 $(ODIR)/%.o: %.cpp $(DEPS)
 	$(CC) -c -o $@ $< $(CFLAGS)
 
-fft_test: $(OBJ)
+wave_graph: $(OBJ)
 	$(CC) -o $@ $^ $(CFLAGS) $(LIBS)
 
 .PHONY: clean
