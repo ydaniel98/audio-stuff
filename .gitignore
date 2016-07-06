@@ -1,0 +1,7 @@
+*.pdf
+*.wav
+/Sounds
+/Testing
+/fft_test
+/Graphs
+/Formatters
