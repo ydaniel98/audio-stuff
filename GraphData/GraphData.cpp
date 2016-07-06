@@ -23,9 +23,9 @@
 // For the sake of OCD
 #define FILE_NAME               fileName
 // For the sake of readability - Data file path/name
-#define DATA_FILE               argv[1]
+#define DATA_FILE               dataFileName
 // Plotter file (.sh) (bash code)
-#define PLOTTER                 argv[2]
+#define PLOTTER                 plotterFileName
 
 // PDF file merger command (OSX only)
 #define PDF_MERGE_FILE_CMD      "/System/Library/Automator/Combine\\ PDF\\ Pages.action/Contents/Resources/join.py -o"
@@ -38,6 +38,7 @@
 #define LOG_GET_MAX_TIME        "Getting max time from data file"
 #define LOG_PLOT_RANGE          "Plotting Range: "
 #define LOG_MERGE               "Merging files..."
+#define LOG_STEP                "Finding Step"
 /**/
 
 /*
@@ -64,16 +65,71 @@ float t;
 string fileName;
 // Data file to plot
 fstream dataFile;
+
+float plottingStep;
+bool plottingStepOption;
+
+string dataFileName;
+string plotterFileName;
+
+uint8_t paramsCounter;
+
+bool optionsError;
+bool parsingError;
 /**/
 
 int main(int argc, char * argv[]) {
+
+  /*
+  * Parsing
+  */
 
   if (argc < 3) {
     cout << LOG_ERR_USAGE << endl;
     return 1;
   }
 
-  if (stat(DATA_FILE, &s) == -1) {
+  for (uint8_t i = 1; i < argc; i++) {
+    if (argv[i][0] == '-') {
+      // Possible option
+      if (argv[i][1] == 'p') {
+        plottingStep = (float) atof(argv[i + 1]);
+        plottingStepOption = true;
+      } else {
+        optionsError = true;
+        parsingError = true;
+        break;
+      }
+      i++;
+    } else {
+      switch (paramsCounter) {
+        case 0:
+          dataFileName = argv[i];
+          break;
+        case 1:
+          plotterFileName = argv[i];
+          break;
+      }
+      paramsCounter++;
+    }
+  }
+
+  if (paramsCounter < 2)
+    parsingError = true;
+
+  if (optionsError) {
+    cout << "Invalid Option" << endl;
+    return 1;
+  }
+
+  if (parsingError) {
+    cout << "Parsing Error: Invalid Input" << endl;
+    return 1;
+  }
+
+  /**/
+
+  if (stat(DATA_FILE.c_str(), &s) == -1) {
     cout << LOG_ERR_DATA_FILE << DATA_FILE << endl;
     return 1;
   }
@@ -84,6 +140,9 @@ int main(int argc, char * argv[]) {
   buffer = "";
   cbuff = 0;
   fileName = "";
+
+  if (!plottingStepOption)
+    plottingStep = 1.6;
   /**/
 
   /*
@@ -136,12 +195,13 @@ int main(int argc, char * argv[]) {
   }
 
   t = (float)atof(buffer.c_str());
+  cout << to_string(t) << endl;
   /**/
 
   uint8_t count = 0;
 
-  for (float i = 0; i < t; i += 1.7) {
-    cout << LOG_PLOT_RANGE << i << ':' << i + 1.6 << endl;
+  for (float i = 0; i < t; i += plottingStep + 0.1) {
+    cout << LOG_PLOT_RANGE << i << ':' << i + plottingStep << endl;
     /*
     * Plot with gnuplot
     */
@@ -160,7 +220,7 @@ int main(int argc, char * argv[]) {
     buffer += " [";
     buffer += to_string(i);
     buffer += ":";
-    buffer += to_string(i + 1.6);
+    buffer += to_string(i + plottingStep);
     buffer += "]";
 
     count++;
